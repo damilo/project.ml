@@ -74,3 +74,76 @@ q2_model.fit (X_train_set, y_train_set, epochs=10, batch_size=20)
 score = q2_model.evaluate (X_test_set, y_test_set, batch_size=5)
 
 print ('acc: ', score[1]*100, '%')
+
+
+
+# ----- DATA AUGMENTATION ----- #
+# Failed, because of tooooo many files > do easier example first
+
+
+
+### TODO: Define your architecture.
+from keras.layers import GlobalAveragePooling2D
+from keras.layers import Dense
+from keras.models import Sequential
+from keras.callbacks import ModelCheckpoint
+
+""" Architecture
+- the pre-trained model is given by keras and implemented in 'extract_bottleneck_features.py'
+  - since parameter 'inlcude_top' is set to False, we only have to take care of the FC layer
+  - default input size for Inception model is (299, 299, depth) > preprocessing of image is implemented too
+- FC layer requires a 1D array as input, therefor a global average pooling layer is taken
+- last but not least, the output layer with 133 classes is added
+"""
+InceptionV3_augmodel = Sequential ()
+
+InceptionV3_augmodel.add (GlobalAveragePooling2D (input_shape=train_InceptionV3.shape[1:]))
+
+InceptionV3_augmodel.add (Dense (units=133, activation='softmax'))
+
+InceptionV3_augmodel.summary()
+
+
+### Data Augmentation
+from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+
+# we only train rotation and translation invariance
+train_datagen = ImageDataGenerator (
+    rotation_range=30, # Degree range for random rotations
+    width_shift_range=0.2, # Range for random horizontal shifts (fraction of total width)
+    height_shift_range=0.2, # Range for random vertical shifts (fraction of total height)
+    horizontal_flip=True, # Randomly flip inputs horizontally
+    fill_mode='nearest')
+
+train_generator = train_datagen.flow_from_directory (
+    train_files,  # this is the target directory
+    target_size= (224, 224),  # all images will be resized
+    batch_size=20,
+    class_mode=None)
+
+
+valid_datagen = ImageDataGenerator ()
+
+valid_generator = valid_datagen.flow_from_directory (
+    valid_files,
+    target_size=(224, 224),
+    batch_size=20,
+    class_mode=None)
+
+
+
+
+from keras.callbacks import ModelCheckpoint
+
+cbCheckpointer = ModelCheckpoint (
+    filepath='saved_models/weights.best.InceptionV3.dataAug.h5',
+    verbose=1,
+    save_best_only=True)
+
+InceptionV3_augmodel.fit_generator (
+    train_generator,
+    steps_per_epoch=2000 // 20,
+    epochs=10,
+    validation_data=validation_generator,
+    validation_steps=800 // 20,
+    callbacks=[cbCheckpointer])
