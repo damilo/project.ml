@@ -1,246 +1,144 @@
 import numpy as np
-from collections import defaultdict
-import random
+import random as rn
+import os
+import tensorflow as tf
+from keras import backend as K
+from keras import models
 
-class Agentv2:
+from .dqn import MLPQNet
+from .memory import Memory
 
-    def __init__ (self, state_size, action_size):
-        # hyperparameters
-        # exploration
-        self.explore_start = 1.0 # exploration probability at start
-        self.explore_stop = 0.01 # minimum exploration probability
-        self.decay_rate = 0.0001 # exponential decay rate for exploration prob
-        self.explore_p = 0
-        # NN
-        self.hidden_size = 64 # number of units in each Q-network hidden layer
-        self.learning_rate = 0.0001 # Q-network learning rate
-        # RL
-        self.gamma = 0.8
-        
-        # Agent's Memory and Brain
-        self._memory = Memory ()
-        self._brain = QNetwork (name='brain',
-            learning_rate=self.learning_rate,
-            state_size=state_size, action_size=action_size,
-            hidden_size=self.hidden_size)
-        
-        # Environment
-        self.state_size = state_size
-        self.action_size = action_size
-        
 
-    def act (self, state, step_num, sess):
+### CLASS MLPQNAgent w/ experience replay, target network
+class MLPQNAgent ():
+    
+    
+    def __init__ (self, state_shape, action_size, init_info=False):
+        # rl hyperparameters
+         # exploration probability
+        self.__eps_max = 1.0 # exploration probability at start
+        self.__eps_min = 0.01 # minimum exploration probability
+        self.__eps_decay = 0.00005 # exponential decay rate for exploration prob
+        self.explore_p = self.__eps_max - self.__eps_min
+         # discount factor
+        self.__gamma = 0.9
+        
+        # agent's memory (for experience replay)
+        self.__memory = Memory (100000)
+        
+        # agent's brain
+        self.__lr = 0.001 # hyperparameter: learning rate
+        self.__brain = (MLPQNet (state_shape, action_size, self.__lr)).model
+
+        # target estimator network (for target network)
+        self.__target_estimator = (MLPQNet (state_shape, action_size, self.__lr)).model #models.clone_model (self.__brain)
+        self.__target_estimator.set_weights (self.__brain.get_weights ())
+        self.__update_target_estimator_every = 2000 # parameter: how many learn cycles until updating the target estimator network
+        self.__tau = 0.125
+        
+        # environment
+        self.__action_size = action_size
+        self.__learn_cnt = 1 # parameter: learning counter
+
+        if (init_info):
+            print ('rl hyperparameters:')
+            print (' epsilon: max = {}, min = {}, decay = {}'.format (self.__eps_max, self.__eps_min, self.__eps_decay))
+            print (' gamma: value = {}'.format (self.__gamma))
+            print ('nn hyperparameters:')
+            print (' learning rate: value = {}'.format (self.__lr))
+            print ('nn architecture:')
+            self.print_qnet ()
+            print ('target nn parameters:')
+            print (' update target every learn cycle: {}'.format (self.__update_target_estimator_every))
+            print (' tau: value = {}'.format (self.__tau))
+    
+    
+    def select_action (self, state):
         action = None
-        self.explore_p = self.explore_stop + (self.explore_start - self.explore_stop)*np.exp (-self.decay_rate*step_num)
         if self.explore_p > np.random.rand ():
             # Make a random action
-            # TODO Sample of action space e.g.
-            action = random.randint (0, self.action_size-1)
-            #action = self._env.action_space.sample ()
+            action = rn.randint (0, self.__action_size-1)
         else:
             # Get action from Q-network
-            feed = {self._brain.inputs_: state.reshape ((1, *state.shape))}
-            Qs = sess.run (self._brain.output, feed_dict=feed)
-            action = np.argmax (Qs)
-
-        return action
-        
-
-    def store (self, observation):
-        self._memory.add (observation)
-
-
-    def learn (self, batch_size, sess):
-        # Sample mini-batch from memory
-        batch = self._memory.sample (batch_size)
-        states = np.array ([each[0] for each in batch])
-        actions = np.array ([each[1] for each in batch])
-        rewards = np.array ([each[2] for each in batch])
-        next_states = np.array ([each[3] for each in batch])
-        
-        # Train network
-        target_Qs = sess.run (self._brain.output, feed_dict={self._brain.inputs_: next_states})
-        
-        # Set target_Qs to 0 for states where episode ends
-        episode_ends = (next_states == np.zeros(states[0].shape)).all(axis=1)
-        target_Qs[episode_ends] = (0, 0)
-        
-        targets = rewards + self.gamma * np.max (target_Qs, axis=1)
-
-        loss, _ = sess.run ([self._brain.loss, self._brain.opt],
-                            feed_dict={self._brain.inputs_: states,
-                                        self._brain.targetQs_: targets,
-                                        self._brain.actions_: actions})
-        
-        return loss
-
-
-from collections import deque
-class Memory:
-    def __init__ (self, max_size=1000):
-        self.buffer = deque (maxlen=max_size)
-    
-    def add (self, sample):
-        self.buffer.append (sample)
-            
-    def sample (self, batch_size):
-        idx = np.random.choice (np.arange(len(self.buffer)), size=batch_size, replace=False)
-        return [self.buffer[ii] for ii in idx]
-
-
-
-import tensorflow as tf
-class QNetwork:
-    def __init__(self, learning_rate=0.01, state_size=4, action_size=2, hidden_size=10, name='QNetwork'):
-        
-        # state inputs to the Q-network
-        with tf.variable_scope(name):
-            self.inputs_ = tf.placeholder(tf.float32, [None, state_size], name='inputs')
-            
-            # One hot encode the actions to later choose the Q-value for the action
-            self.actions_ = tf.placeholder(tf.int32, [None], name='actions')
-            one_hot_actions = tf.one_hot(self.actions_, action_size)
-            
-            # Target Q values for training
-            self.targetQs_ = tf.placeholder(tf.float32, [None], name='target')
-            
-            # ReLU hidden layers
-            self.fc1 = tf.contrib.layers.fully_connected(self.inputs_, hidden_size)
-            self.fc2 = tf.contrib.layers.fully_connected(self.fc1, hidden_size)
-
-            # Linear output layer
-            self.output = tf.contrib.layers.fully_connected(self.fc2, action_size, 
-                                                            activation_fn=None)
-            
-            ### Train with loss (targetQ - Q)^2
-            # output has length 2, for two actions. This next line chooses
-            # one value from output (per row) according to the one-hot encoded actions.
-            self.Q = tf.reduce_sum(tf.multiply(self.output, one_hot_actions), axis=1)
-            
-            self.loss = tf.reduce_mean(tf.square(self.targetQs_ - self.Q))
-            self.opt = tf.train.AdamOptimizer(learning_rate).minimize(self.loss)
-
-
-
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-from keras import optimizers
-
-class MLPQNet ():
-
-    def __init__ (self, state_size, action_size, learning_rate):
-        self.Net = Sequential ()
-        # input layer = feature vector x(s_t)
-        self.Net.add (Dense (10, input_dim=state_size, activation='relu', name='Input'))
-        # hidden layer
-        self.Net.add (Dense (10, activation='relu', name='Hidden_1'))
-        # output layer = p(a|x(s_t)), array of action probabilities given feature vector x(s_t)
-        self.Net.add (Dense (action_size, activation='sigmoid', name='Output'))
-
-        # value function approximation with stochastic gradient descent
-        # since this is linear function approximation, there's only one global optimum > no momentum needed
-        sgd = optimizers.SGD (lr=learning_rate, momentum=0.0)
-        adam = optimizers.Adam (lr=learning_rate)
-        # goal of DQN: minimize mean squared value error VE = (v_true - v_approx)^2
-        self.Net.compile (loss='mean_squared_error', optimizer=sgd)
-    
-    def learn ():
-        pass
-
-    def print_architecture (self):
-        self.Net.summary ()
-    
-    # TODO
-    def save (self, filepath=None):
-        #if (filepath == None):
-        #    filepath = 
-        self.Net.save_weights (filepath)
-    
-    def load (self, filepath):
-        self.Net.load_weights (filepath)
-
-
-class Agentv3 ():
-
-    def __init__ (self, state_size, action_size):
-        # hyperparameters
-        # exploration
-        self.epsilon_max = 1.0 # exploration probability at start
-        self.epsilon_min = 0.01 # minimum exploration probability
-        self.epsilon_decay = 0.0001 # exponential decay rate for exploration prob
-        self.explore_p = 0
-        # NN
-        #self.hidden_size = 64 # number of units in each Q-network hidden layer
-        #self.learning_rate = 0.0001 # Q-network learning rate
-        # RL
-        self.gamma = 0.8
-        
-        # Agent's Memory and Brain
-        self.Memory = Memory ()
-        self.Brain = MLPQNet (state_size, action_size, 0.0001)
-        
-        # Environment
-        #self.state_size = state_size
-        self.action_size = action_size
-        
-
-    def act (self, state, step_num):
-        action = None
-        explore_p = self.epsilon_min + (self.epsilon_max - self.epsilon_min)*np.exp (-self.epsilon_decay*step_num)
-        self.explore_p = explore_p
-        
-        if explore_p > np.random.rand ():
-            # Make a random action
-            action = random.randint (0, self.action_size-1)
-        else:
-            # Get action from Q-network
-            action_probs = self.Brain.Net.predict (state)
+            action_probs = self.__brain.predict (state)
             action = np.argmax (action_probs)
 
         return action
-        
-
+    
+    
     def store (self, observation):
-        self.Memory.add (observation)
-
-
+        self.__memory.add (observation)
+    
+    
     def learn (self, batch_size):
-
-        batch = self.Memory.sample (batch_size)
-        hist = []
-        for state, action, reward, next_state in batch:
-            target = reward
-            if not ((next_state == np.zeros (state.shape)).all ()):
-              target = reward + self.gamma * np.amax(self.Brain.Net.predict(np.reshape(next_state, [1, 4]))[0])
-            target_f = self.Brain.Net.predict(np.reshape(state, [1, 4]))
-            target_f[0][action] = target
-            hist.append (self.Brain.Net.fit (np.reshape(state, [1, 4]), target_f, epochs=1, verbose=0))
-        return hist
-
-        """
-        # Sample mini-batch from memory
-        batch = self.Memory.sample (batch_size)
+        # because of this if, no pre-initialization of buffer is needed
+        if (self.__memory.length () < batch_size):
+            return
+        
+        batch = self.__memory.sample (batch_size)
+        
+        # shape of each array: (batch_size, each_shape)
         states = np.array ([each[0] for each in batch])
         actions = np.array ([each[1] for each in batch])
         rewards = np.array ([each[2] for each in batch])
         next_states = np.array ([each[3] for each in batch])
+        
+        # NEW learn w/ target network
 
-        # target values - the values we want to become
-        target_psa = self.Brain.Net.predict (next_states)
-        # set target values to 0 for states where episode ends
+        # get Q-table of next states from target estimator network
+        qtable_next_states = self.__target_estimator.predict_on_batch (next_states)
+        # set Q-table to 0 for states where episode ends
         episode_ends = (next_states == np.zeros (states[0].shape)).all (axis=1)
-        target_psa[episode_ends] = np.zeros (self.action_size)
+        qtable_next_states[episode_ends] = np.zeros (self.__action_size)
         
-        target_updates = rewards + 0.7 * np.max (target_psa, axis=1)
-
-        # get approximate values
-        approx_psa = self.Brain.Net.predict (states)
-
-        # update approximate value for taken action to target value
-        for i in range (approx_psa.shape[0]):
-            approx_psa[i,actions[i]] = target_updates[i]
+        # NEW get new target values (done info is needed, then no need to do the 'episode_ends' stuff above)
+        #target_values = rewards + np.invert (dones, dtype=np.float32) * self.__gamma * np.amax (qtable_next_states, axis=1)
+        # OLD get new target values
+        target_values = rewards + self.__gamma * np.amax (qtable_next_states, axis=1)
         
+        # update Q-table of states with target values
+        # due to this, a weight update of the neural network can be performed
+        qtable_states = self.__brain.predict_on_batch (states)
+        for new, qtable_state, action in zip (range (batch_size), qtable_states, actions):
+            qtable_state[action] = target_values[new]
+        
+        # update target estimator network
+        if self.__learn_cnt % self.__update_target_estimator_every == 0:
+            self.__update_target_estimator ()
 
-        # train our brain
-        return self.Brain.Net.fit (states, approx_psa, epochs=1, batch_size=batch_size, verbose=0)
-        """
+        
+        # train network with updated Q-tables
+        loss = self.__brain.train_on_batch (states, qtable_states)
+
+        # update exploration
+        self.explore_p = self.__eps_min + (self.__eps_max - self.__eps_min)*np.exp (-self.__eps_decay*self.__learn_cnt)
+        
+        # update learning cycle count
+        self.__learn_cnt += 1
+        
+        return loss
+    
+    
+    def print_qnet (self):
+        return self.__brain.summary ()
+    
+    
+    def __update_target_estimator (self):
+        # copy weights from brain to target estimator network
+        # note: if weights are copied: no compile of target model needed to get same predictions
+        weights = self.__brain.get_weights ()
+        target_weights = self.__target_estimator.get_weights ()
+        for i in range (len (target_weights)):
+            target_weights[i] = weights[i] * self.__tau + target_weights[i] * (1 - self.__tau)
+
+        self.__target_estimator.set_weights (target_weights)
+        
+        print ('>>> target estimator network updated ({})'.format (self.__learn_cnt))
+    
+    
+    def reset (self):
+        slf.__learn_cnt = 0
+    
+    
+    def get_memory_size (self):
+        return (self.__memory.length ())
