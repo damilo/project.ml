@@ -24,7 +24,7 @@ class MLPQNAgent ():
         self.__gamma = 0.9
         
         # agent's memory (for experience replay)
-        self.__memory = Memory (100000)
+        self.__memory = Memory (20000)
         
         # agent's brain
         self.__lr = 0.001 # hyperparameter: learning rate
@@ -33,7 +33,7 @@ class MLPQNAgent ():
         # target estimator network (for target network)
         self.__target_estimator = (MLPQNet (state_shape, action_size, self.__lr)).model #models.clone_model (self.__brain)
         self.__target_estimator.set_weights (self.__brain.get_weights ())
-        self.__update_target_estimator_every = 2000 # parameter: how many learn cycles until updating the target estimator network
+        self.__update_target_estimator_every = 1000 # parameter: how many learn cycles until updating the target estimator network
         self.__tau = 0.125
         
         # environment
@@ -73,7 +73,7 @@ class MLPQNAgent ():
     def learn (self, batch_size):
         # because of this if, no pre-initialization of buffer is needed
         if (self.__memory.length () < batch_size):
-            return
+            return 0.
         
         batch = self.__memory.sample (batch_size)
         
