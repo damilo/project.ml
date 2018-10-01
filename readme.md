@@ -24,4 +24,11 @@ Task: Describe the variation in the different types of customers that a wholesal
 <a href='https://archive.ics.uci.edu/ml/datasets/Wholesale+customers'>Dataset on UCI Machine Learning</a>
 
 ### Dog Breed Classifier
+\- multi-class classification, neural networks (CNN), Haar Cascades, Transfer Learning -
+
+Task: Predict if an image contains either a human or a dog. If it's a dog then output the dog breed.
+
 ### Teach a Quadcopter How to Fly
+\- reinforcement learning (continuous/discrete spaces, Deep Q-Learning) -
+
+Task: Teach a simulated quadcopter to fly up in the air.
