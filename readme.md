@@ -32,3 +32,17 @@ Task: Predict if an image contains either a human or a dog. If it's a dog then o
 \- reinforcement learning (continuous/discrete spaces, Deep Q-Learning) -
 
 Task: Teach a simulated quadcopter to fly up in the air.
+
+### Blackfriday
+\- Regression, Decision Tree
+
+<a href = 'https://datahack.analyticsvidhya.com/contest/black-friday/'>Contest: Black Friday - Analytics Vidhya</a>
+
+Task: Understand the customer purchase behaviour (specifically, purchase amount) against various products of different categories
+
+### Human Activity Recognition
+\- multi-class classification, MLP, statistics (standardization, outlier/boxplot)
+
+<a href = 'http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones'>Dataset on UCI</a>
+
+Task: estimate person activities WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING out of accelerometer and gyroscope data captured from smartphone
