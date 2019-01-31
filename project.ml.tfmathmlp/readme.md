@@ -121,7 +121,7 @@ The activation function at the output layer depends on the task to be solved by 
 - classification tasks: Softmax activation function
 - regression tasks: no activation function
 
-## Application in Tensorflow
+## Application in TensorFlow
 
 With the math in the back, we can build our own neural network layers.
 
@@ -207,7 +207,7 @@ logits = nn_layer (
 # ...
 ```
 
-This article presented the math of the transformation from inputs to outputs in an ANN and proves it by implementing an example in Tensorflow.
+This article presented the math of the transformation from inputs to outputs in an ANN and proves it by implementing an example in TensorFlow.
 
 The contents was strongly influenced by the book <a href = 'http://shop.oreilly.com/product/0636920052289.do'>'Hands-On Machine Learning with Scikit-Learn and TensorFlow'</a> by Aurélien Géron. It is a great book for everyone who wants to get a solid foundation in Machine Learning algorithms and their utilization for real-world tasks.
 
