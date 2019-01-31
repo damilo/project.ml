@@ -6,12 +6,14 @@ There's one project per directory. Each project consists of a Jupyter Notebook f
 ## Contents
 ### Predicting Boston Housing Prices
 dir: boston_housing
+
 \- regression, grid search, cross-validation -
 
 A modified version of the Boston Housing dataset found on the UCI Machine Learning Repository. Data and description can now be found on <a href='https://www.kaggle.com/c/boston-housing'>Kaggle</a>.
 
 ### Finding Donors for CharityML
 dir: finding_donors
+
 \- classification, supervised learning (Naive Bayes, AdaBoost, SVM), feature engineering (unskewing, normalization, one-hot encoding), feature selection -
 
 Task: Predict whether an individual makes more than $50,000 per year based on census data
@@ -20,6 +22,7 @@ Task: Predict whether an individual makes more than $50,000 per year based on ce
 
 ### Creating Customer Segments
 dir: customer_segments
+
 \- classification, unsupervised learning (GMM, K-Means), statistics (distributions, correlations/heatmap), PCA -
 
 Task: Describe the variation in the different types of customers that a wholesale distributor interacts with, to best structure their delivery service to meet the needs of each customer.
@@ -28,18 +31,21 @@ Task: Describe the variation in the different types of customers that a wholesal
 
 ### Dog Breed Classifier
 dir: dog-project
+
 \- multi-class classification, neural networks (CNN), Haar Cascades, Transfer Learning -
 
 Task: Predict if an image contains either a human or a dog. If it's a dog then output the dog breed.
 
 ### Teach a Quadcopter How to Fly
 dir: RL-Quadcopter-2
+
 \- reinforcement learning (continuous/discrete spaces, Deep Q-Learning) -
 
 Task: Teach a simulated quadcopter to fly up in the air.
 
 ### Blackfriday
 dir: project.ml.blackfriday
+
 \- Regression, Decision Tree
 
 <a href = 'https://datahack.analyticsvidhya.com/contest/black-friday/'>Contest: Black Friday - Analytics Vidhya</a>
@@ -48,6 +54,7 @@ Task: Understand the customer purchase behaviour (specifically, purchase amount)
 
 ### Human Activity Recognition
 dir: project.ml.har
+
 \- multi-class classification, MLP, statistics (standardization, outlier/boxplot)
 
 <a href = 'http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones'>Dataset on UCI</a>
@@ -56,6 +63,7 @@ Task: estimate person activities WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, 
 
 ### Classification of handwritten digits
 dir: project.ml.tfmathmlp
+
 \- multi-class classification, MLP
 
 Task: classify handwritten digits
