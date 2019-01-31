@@ -118,7 +118,7 @@ Rectifying Linear Unit $ReLU (z) = max (0, z)$
 Hyperbolic Tangent $tanh (z) = 2\sigma (2z) - 1$
 
 The activation function at the output layer depends on the task to be solved by the ANN:
-- classification tasks: Softmax activaton function
+- classification tasks: Softmax activation function
 - regression tasks: no activation function
 
 ## Application in Tensorflow
