@@ -46,3 +46,11 @@ Task: Understand the customer purchase behaviour (specifically, purchase amount)
 <a href = 'http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones'>Dataset on UCI</a>
 
 Task: estimate person activities WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING out of accelerometer and gyroscope data captured from smartphone
+
+### Classification of handwritten digits
+\- multi-class classification, MLP
+
+Task: classify handwritten digits
+
+Implementation of story <a href = 'https://medium.com/@daniel.hellwig.p/mathematical-representation-of-a-perceptron-layer-with-example-in-tensorflow-754a38833b44'>Mathematical Representation of a Perceptron Layer
+(with example in TensorFlow)</a>, posted on Medium.
