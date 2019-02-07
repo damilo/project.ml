@@ -1,2 +1,0 @@
-model_checkpoint_path: "MlpBest__best_acc_val.ckpt"
-all_model_checkpoint_paths: "MlpBest__best_acc_val.ckpt"
