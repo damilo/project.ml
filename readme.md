@@ -7,14 +7,14 @@ There's one project per directory. Each project consists of a Jupyter Notebook f
 ### Predicting Boston Housing Prices
 dir: boston_housing
 
-\- regression, grid search, cross-validation -
+\- regression, grid search, cross-validation
 
 A modified version of the Boston Housing dataset found on the UCI Machine Learning Repository. Data and description can now be found on <a href='https://www.kaggle.com/c/boston-housing'>Kaggle</a>.
 
 ### Finding Donors for CharityML
 dir: finding_donors
 
-\- classification, supervised learning (Naive Bayes, AdaBoost, SVM), feature engineering (unskewing, normalization, one-hot encoding), feature selection -
+\- classification, supervised learning (Naive Bayes, AdaBoost, SVM), feature engineering (unskewing, normalization, one-hot encoding), feature selection
 
 Task: Predict whether an individual makes more than $50,000 per year based on census data
 
@@ -23,7 +23,7 @@ Task: Predict whether an individual makes more than $50,000 per year based on ce
 ### Creating Customer Segments
 dir: customer_segments
 
-\- classification, unsupervised learning (GMM, K-Means), statistics (distributions, correlations/heatmap), PCA -
+\- classification, unsupervised learning (GMM, K-Means), statistics (distributions, correlations/heatmap), PCA
 
 Task: Describe the variation in the different types of customers that a wholesale distributor interacts with, to best structure their delivery service to meet the needs of each customer.
 
@@ -32,7 +32,7 @@ Task: Describe the variation in the different types of customers that a wholesal
 ### Dog Breed Classifier
 dir: dog-project
 
-\- multi-class classification, neural networks (CNN), Haar Cascades, Transfer Learning -
+\- multi-class classification, neural networks (CNN), Haar Cascades, Transfer Learning
 
 Task: Predict if an image contains either a human or a dog. If it's a dog then output the dog breed.
 
@@ -61,10 +61,23 @@ dir: project.ml.har
 
 Task: estimate person activities WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING out of accelerometer and gyroscope data captured from smartphone
 
-### Classification of handwritten digits
+### Classification of Handwritten Digits #1 - MNIST
+dir: project.ml.tf-c11.08
+
+\- multi-class classification, MLP, grid search w/ stratified k-fold cross validation, TensorFlow
+
+Realization of exercise 8 in chapter 11, book 'Hands-On Machine Learning...' by Aurelien Geron
+
+Build, train and evaluate a Deep Neural Network.
+
+Task: Classify handwritten digits
+
+Dataset: MNIST (60,000 training instances, 10,000 test instances)
+
+### Classification of Handwritten Digits #2
 dir: project.ml.tfmathmlp
 
-\- multi-class classification, MLP
+\- multi-class classification, MLP, TensorFlow
 
 Task: classify handwritten digits
 
