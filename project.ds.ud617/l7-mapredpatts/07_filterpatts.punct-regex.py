@@ -5,6 +5,8 @@
 # last character. There is no need to parse the HTML inside 'body'. Also, do not pay
 # special attention to newline characters.
 
+#!/usr/bin/python
+
 import sys
 import csv
 import re
