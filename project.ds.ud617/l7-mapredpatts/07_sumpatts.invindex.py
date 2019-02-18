@@ -52,19 +52,33 @@ def mapper ():
         # extract id and body of line
         node_id = line[0]
         body = line[4]
-        
+
         # split body into single words
         # split at whitespaces and '.,!?:;"()<>[]#$=-/'
         body_parts = body.strip ().split ()
+
         body_parts_clean = []
-        look_for = r'[\W]'
+        look_for_non_word_chars = r'[\W]'
         for part in body_parts:
             cleaned_part = part
-            result = re.findall (look_for, part)
+            result = re.findall (look_for_non_word_chars, part)
             if result:
-                cleaned_part = re.sub (look_for, '', part)
-            
-            body_parts_clean.append (cleaned_part.lower ())
+                # look for HTML
+                # beware: this is an absolute dirty version, better take an HTML parser instead of regex (i.e. BeautifulSoup)
+                last_html_end = 0
+                for html_start in re.finditer (r'<', part):
+                    html_end = re.search (r'>', part[html_start.start ():])
+                    if not html_end:
+                        continue
+                    this_html_start = html_start.start () - last_html_end
+                    this_html_end = html_start.start () + html_end.start () + 1
+                    part = part.replace (part[this_html_start:this_html_end], '')
+                    last_html_end = this_html_end
+                
+                cleaned_part = re.sub (look_for_non_word_chars, '', part)
+
+            if (len (cleaned_part) > 0):
+                body_parts_clean.append (cleaned_part.lower ())
         
         # output key-value, ie. single word \t node id
         for part in body_parts_clean:
@@ -139,9 +153,15 @@ def mapred_postproc ():
 # ----------
 
 test_text_mapper = """\"\"\t\"\"\t\"\"\t\"\"\t\"333\"\t\"\"
+\"112"\t\"\"\t\"\"\t\"\"\t\" < VerSionINg okay\"\t\"\"
+\"112"\t\"\"\t\"\"\t\"\"\t\" < VerSionINg OKAY >\"\t\"\"
+\"112"\t\"\"\t\"\"\t\"\"\t\" < VerSionINg oKaY < </p>\"\t\"\"
 \"72"\t\"\"\t\"\"\t\"\"\t\" version?</p>\"\t\"\"
+\"73"\t\"\"\t\"\"\t\"\"\t\"<p>version?</p>\"\t\"\"
+\"74"\t\"\"\t\"\"\t\"\"\t\"<title>version?</title>\"\t\"\"
 \"100"\t\"\"\t\"\"\t\"\"\t\" versioning\"\t\"\"
 \"110"\t\"\"\t\"\"\t\"\"\t\" VerSionINg\"\t\"\"
+\"112"\t\"\"\t\"\"\t\"\"\t\" < VerSionINg okay\"\t\"\"
 """
 """
 \"42"\t\"\"\t\"\"\t\"\"\t\"333\"\t\"\"
