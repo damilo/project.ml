@@ -38,53 +38,19 @@ def mapper ():
     reader = csv.reader (sys.stdin, delimiter='\t')
     writer = csv.writer (sys.stdout, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
     
-    header = True
     for line in reader:
-
-        # jump over header
-        if (header):
-            header = False
-            continue
-        
-        # check input length
-        # we assume that every line is okay
 
         # extract id and body of line
         node_id = line[0]
-        body = line[4]
+        body = line[4].lower ()
 
-        # split body into single words
-        # split at whitespaces and '.,!?:;"()<>[]#$=-/'
-        body_parts = body.strip ().split ()
-
-        body_parts_clean = []
-        look_for_non_word_chars = r'[\W]'
-        for part in body_parts:
-            cleaned_part = part
-            result = re.findall (look_for_non_word_chars, part)
-            if result:
-                # look for HTML
-                # beware: this is an absolute dirty version, better take an HTML parser instead of regex (i.e. BeautifulSoup)
-                last_html_end = 0
-                for html_start in re.finditer (r'<', part):
-                    html_end = re.search (r'>', part[html_start.start ():])
-                    if not html_end:
-                        continue
-                    this_html_start = html_start.start () - last_html_end
-                    this_html_end = html_start.start () + html_end.start () + 1
-                    part = part.replace (part[this_html_start:this_html_end], '')
-                    last_html_end = this_html_end
-                
-                cleaned_part = re.sub (look_for_non_word_chars, '', part)
-
-            if (len (cleaned_part) > 0):
-                body_parts_clean.append (cleaned_part.lower ())
         
-        # output key-value, ie. single word \t node id
-        for part in body_parts_clean:
-            out = [part] + [node_id]
-            writer.writerow (out)
-
+        re_non_word_chars = r'[\W]'
+        body_parts = re.split (re_non_word_chars, body)
+        
+        for part in body_parts:
+            if (len (part) > 0):
+                writer.writerow ([part, node_id])
 
 # reducer
 """
@@ -124,7 +90,6 @@ def reducer ():
     
     out = [oldWord] + [', '.join (wordIndex)]
     writer.writerow (out)
-
 
 # postproc
 """
@@ -178,6 +143,7 @@ test_text_postproc = """\"333\"\t\"42, 44\"
 \"miao\"\t\"44\"
 """
 
+
 from io import StringIO
 def main ():
 
@@ -197,3 +163,59 @@ def main ():
 
 if __name__ == '__main__':
     main ()
+
+# ----------
+
+"""
+old mapper - deprecated
+def mapper ():
+    reader = csv.reader (sys.stdin, delimiter='\t')
+    writer = csv.writer (sys.stdout, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
+    
+    header = True
+    for line in reader:
+
+        # jump over header
+        if (header):
+            header = False
+            continue
+        
+        # check input length
+        # we assume that every line is okay
+
+        # extract id and body of line
+        node_id = line[0]
+        body = line[4]
+
+        # split body into single words
+        # split at whitespaces and '.,!?:;"()<>[]#$=-/'
+        body_parts = body.strip ().split ()
+
+        body_parts_clean = []
+        look_for_non_word_chars = r'[\W]'
+        for part in body_parts:
+            cleaned_part = part
+            result = re.findall (look_for_non_word_chars, part)
+            if result:
+                # look for HTML
+                # beware: this is an absolute dirty version, better take an HTML parser instead of regex (i.e. BeautifulSoup)
+                last_html_end = 0
+                for html_start in re.finditer (r'<', part):
+                    html_end = re.search (r'>', part[html_start.start ():])
+                    if not html_end:
+                        continue
+                    this_html_start = html_start.start () - last_html_end
+                    this_html_end = html_start.start () + html_end.start () + 1
+                    part = part.replace (part[this_html_start:this_html_end], '')
+                    last_html_end = this_html_end
+                
+                cleaned_part = re.sub (look_for_non_word_chars, '', part)
+
+            if (len (cleaned_part) > 0):
+                body_parts_clean.append (cleaned_part.lower ())
+        
+        # output key-value, ie. single word \t node id
+        for part in body_parts_clean:
+            out = [part] + [node_id]
+            writer.writerow (out)
+"""
