@@ -71,7 +71,6 @@ test_input = """\"id\"\t\"title\"\t\"tagnames\"\t\"author_id\"\t\"body\"\t\"node
 from io import StringIO
 def main ():
 
-    print ('output:')
     sys.stdin = StringIO (test_input)
     mapper ()
     sys.stdin = sys.__stdin__

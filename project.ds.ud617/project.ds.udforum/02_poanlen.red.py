@@ -22,6 +22,11 @@ def reducer ():
     reader = csv.reader (sys.stdin, delimiter='\t')
     writer = csv.writer (sys.stdout, delimiter='\t', quotechar='"', quoting=csv.QUOTE_ALL)
     
+    old_node_id = None
+    current_question_len = 0
+    sum_answer_len = 0
+    num_answers = 0
+    
     header = False
     fields_per_line = 3
     for line in reader:
@@ -41,45 +46,51 @@ def reducer ():
         node_body_len = line[2]
 
         # process data
-        key = None
-        value = 0
 
-        # filter posts and create unique keys -> this will make a nice sorting for the reducer
-        if ('.-1' in node_id): # it is a question
-            # [!] there were definitely answers of an old question before
+        if (('.-1' in node_id) and (old_node_id != node_id) and (old_node_id != None)): # a change in question occured
+            # [i] there were definitely answers of an old question before
             # value = length answer / count answers
             # key is length of question post
-            # value set to 0
-            pass
-        else: # it is an answer
-            # [!] there was definitely a question before
-            # key is length of question post
-            # sum up length of answers
-            # count answers
-            # [i] do this until new question comes
-            pass
+            average_answer_len = 0.
+            if (num_answers != 0):
+                average_answer_len = sum_answer_len / (num_answers*1.)
+            writer.writerow ([old_node_id[:-3], current_question_len, average_answer_len])
 
-        # output key and value
-        writer.writerow ([key, value])
+        if ('.-1' in node_id):
+            current_question_len = int (node_body_len)
+            sum_answer_len = 0
+            num_answers = 0
+            old_node_id = node_id
+        else:
+            sum_answer_len += int (node_body_len)
+            num_answers += 1
+
+    # output of last line
+    average_answer_len = 0.
+    if (num_answers != 0):
+        average_answer_len = sum_answer_len / (num_answers*1.)
+    writer.writerow ([old_node_id[:-3], current_question_len, average_answer_len])
 
 
 # UNIT TEST ----------
 
-test_input = """\"id\"\t\"title\"\t\"tagnames\"\t\"author_id\"\t\"body\"\t\"node_type\"\t\"parent_id\"\t\"abs_parent_id\"\t\"added_at\"\t\"score\"\t\"state_string\"\t\"last_edited_id\"\t\"last_activity_by_id\"\t\"last_activity_at\"\t\"active_revision_id\"\t\"extra\"\t\"extra_ref_id\"\t\"extra_count\"\t\"marked\"
-\"id1\"\t\"-\"\t\"-\"\t\"001\"\t\"id1_body\"\t\"question\"\t\"\\N\"\t\"-\"\t\"2012-02-25 08:09:06.787181+00\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"
-\"only 18 fields\"\t\"-\"\t\"-\"\t\"001\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"2012-02-25 08:09:06.787181+00\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"
-\"id2\"\t\"-\"\t\"-\"\t\"002\"\t\"id2_bodybody\"\t\"answer\"\t\"id1\"\t\"-\"\t\"2012-02-27 22:09:06.0+00\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"
-\"id3\"\t\"-\"\t\"-\"\t\"002\"\t\"id3_body3\"\t\"question\"\t\"\\N\"\t\"-\"\t\"2012-02-27 25:09:06.0+00\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"
-\"-\"\t\"-\"\t\"-\"\t\"003\"\t\"-\"\t\"comment\"\t\"-\"\t\"-\"\t\"2010-03-27 13:09:06.34523+00\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"
-\"id2\"\t\"-\"\t\"-\"\t\"002\"\t\"move_body\"\t\"answer\"\t\"id1\"\t\"-\"\t\"2012-02-27 22:09:06.0+00\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"\t\"-\"
+test_input = """\"id1.-1\"\t\"question\"\t\"8\"
+\"id1.id2\"\t\"answer\"\t\"12\"
+\"id1.id2\"\t\"answer\"\t\"9\"
+\"id3.-1\"\t\"question\"\t\"9\"
+\"id3.id4\"\t\"answer\"\t\"78\"
+\"id3.id5\"\t\"answer\"\t\"62\"
+\"id4.-1\"\t\"question\"\t\"31\"
+\"id5.-1\"\t\"question\"\t\"12\"
+\"id5.id6\"\t\"answer\"\t\"4\"
+\"id5.id7\"\t\"answer\"\t\"8\"
 """
 
 from io import StringIO
 def main ():
 
-    print ('output:')
     sys.stdin = StringIO (test_input)
-    mapper ()
+    reducer ()
     sys.stdin = sys.__stdin__
 
 if __name__ == '__main__':
