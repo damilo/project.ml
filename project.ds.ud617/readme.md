@@ -26,6 +26,21 @@ Hadoop mapper and reducer scripts to solve tasks:
 
 Scripts for various tasks to learn common MapReduce design patterns.
 
+## dir: project.ds.udforum
+
+Final project
+
+data: Udacitiy discussion forum data
+
+\- forum_node.tsv: 19 fields, tab delimited, field data in double quotes, header present, field names: 'id', 'title', 'tagnames', 'author_id', 'body', 'node_type', 'parent_id', 'abs_parent_id', 'added_at', 'score', 'state_string', 'last_edited_id', 'last_activity_by_id', 'last_activity_at', 'active_revision_id', 'extra', 'extra_ref_id', 'extra_count', 'marked'
+
+\- forum_users.tsv: 5 fields, tab delimited, field data in double quotes, header present, field names: 'user_ptr_id', 'reputation', 'gold', 'silver', 'bronze'
+
+Tasks:
+
+\- 01: For each student, find the hour during which the student has been posted the most posts.
+
+\- 02: Output the length of a post and the average answer length (just answer, not comment) for each post.
 
 ## additional resources:
 
