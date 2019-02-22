@@ -42,6 +42,8 @@ Tasks:
 
 \- 02: Output the length of a post and the average answer length (just answer, not comment) for each post.
 
+\- 03: Output top 10 tags, ordered by the number of questions they appear in.
+
 ## additional resources:
 
 \- Python regex: <a href = 'https://stackabuse.com/using-regex-for-text-manipulation-in-python/'>Regex for text manipulation in Python</a>
