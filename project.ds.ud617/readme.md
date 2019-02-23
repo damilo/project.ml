@@ -38,12 +38,18 @@ data: Udacitiy discussion forum data
 
 Tasks:
 
-\- 01: For each student, find the hour during which the student has been posted the most posts.
+\- 01 students posting time: For each student, find the hour during which the student has been posted the most posts.
 
-\- 02: Output the length of a post and the average answer length (just answer, not comment) for each post.
+\- 02 post and answer length: Output the length of a post and the average answer length (just answer, not comment) for each post.
 
-\- 03: Output top 10 tags, ordered by the number of questions they appear in.
+\- 03 top tags: Output top 10 tags, ordered by the number of questions they appear in.
+
+\- 04 study groups: For each forum thread (that is a question node with all it's answers and comments), give a list of students that have posted there.
 
 ## additional resources:
 
 \- Python regex: <a href = 'https://stackabuse.com/using-regex-for-text-manipulation-in-python/'>Regex for text manipulation in Python</a>
+
+\- transfer of text: <a href = 'https://pastebin.com/'>pastebin</a>
+
+\- transfer of files: <a href = 'https://justbeamit.com/'>justbeamit</a>
