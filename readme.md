@@ -83,12 +83,3 @@ Task: classify handwritten digits
 
 Implementation of story <a href = 'https://medium.com/@daniel.hellwig.p/mathematical-representation-of-a-perceptron-layer-with-example-in-tensorflow-754a38833b44'>Mathematical Representation of a Perceptron Layer
 (with example in TensorFlow)</a>, posted on Medium.
-
-### Intro to Hadoop and MapReduce / Udacity Course
-dir: project.ds.ud617
-
-\- big data, Hadoop, MapReduce, design patterns
-
-Contains work of course projects.
-
-All work has been done on a virtual machine with a CDH framework installed (Cloudera Distribution for Hadoop).
