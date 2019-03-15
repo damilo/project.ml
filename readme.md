@@ -83,3 +83,14 @@ Task: classify handwritten digits
 
 Implementation of story <a href = 'https://medium.com/@daniel.hellwig.p/mathematical-representation-of-a-perceptron-layer-with-example-in-tensorflow-754a38833b44'>Mathematical Representation of a Perceptron Layer
 (with example in TensorFlow)</a>, posted on Medium.
+
+### Email Spam Estimator
+dir: project.ml.spamest
+
+\- DNN/MLP, binary classification, TensorFlow, , RPA, UiPath
+
+Task: Identify spam using email messages
+
+Dataset: collected emails by Kagglers, <a href= 'https://www.kaggle.com/karthickveerakumar/spam-filter'>Kaggle | Spam Filter</a>
+
+Task was part of a presentation I hold for a company with business in robotic process automation (RPA)
