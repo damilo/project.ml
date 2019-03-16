@@ -87,7 +87,7 @@ Implementation of story <a href = 'https://medium.com/@daniel.hellwig.p/mathemat
 ### Email Spam Estimator
 dir: project.ml.spamest
 
-\- DNN/MLP, binary classification, TensorFlow, , RPA, UiPath
+\- DNN/MLP, binary classification, NLP, TensorFlow, RPA, UiPath
 
 Task: Identify spam using email messages
 
