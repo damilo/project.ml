@@ -1,5 +1,4 @@
-_pres/_res/
-_pres/HamOrSpam.pptx
+_pres/
 SpamEstimator/.ipynb_checkpoints/
 SpamEstimator/__pycache__/
 SpamEstimator/tf_saves/
