@@ -78,7 +78,7 @@
                     </ActivityAction.Argument>
                     <Sequence sap2010:WorkflowViewState.IdRef="Sequence_2">
                       <WriteLine DisplayName="Debug Info" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;[i] new mail: &quot; + &quot;[&quot; + mail.Sender.ToString () + &quot;] &quot; + mail.Subject]" />
-                      <ui:WriteTextFile DisplayName="Write Mail to Text File" FileName="C:\Users\Daniel\OneDrive\projects\project.dsml\project.ml.spafi\_mails\mailBody.txt" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[mail.Subject + Constants.vbTab + mail.Body]" />
+                      <ui:WriteTextFile DisplayName="Write Mail to Text File" FileName="C:\_pyenvs\ml\project.dsml\project.ml\project.ml.spamest\_mails\mailBody.txt" sap2010:WorkflowViewState.IdRef="WriteTextFile_1" Text="[mail.Subject + Constants.vbTab + mail.Body]" />
                     </Sequence>
                   </ActivityAction>
                 </ui:ForEach.Body>
@@ -89,30 +89,30 @@
       </FlowStep>
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
-    <sads:DebugSymbol.Symbol>d1pDOlxVc2Vyc1xEYW5pZWxcT25lRHJpdmVccHJvamVjdHNccHJvamVjdC5kc21sXHByb2plY3QubWwuc3BhZmlcTWFpbFJlYWRlclxNYWlsUmVhZGVyLnhhbWwSPwNdDwIBAUIJWBQCAQJDC1cVAgEDQ4sBQ5EBAgEWRA1WGAIBBEgPSNoCAgEQSQ9VHAIBBUjUAkjXAgIBFUhZSHICARRIpQJItQICARJI+QFIiQICARFJqQFJuQECAQ5PFVIgAgEGUBdQ2QECAQpRF1GWAgIBB1BuUNYBAgELUeUBUZMCAgEJUVhRrQECAQg=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2dDOlxVc2Vyc1xEYW5pZWxcT25lRHJpdmVccHJvamVjdHNccHJvamVjdC5kc21sXHByb2plY3QubWxccHJvamVjdC5tbC5zcGFtZXN0XE1haWxSZWFkZXJcTWFpbFJlYWRlci54YW1sEj8DXQ8CAQFCCVgUAgECQwtXFQIBA0OLAUORAQIBFkQNVhgCAQRID0jaAgIBEEkPVRwCAQVI1AJI1wICARVIWUhyAgEUSKUCSLUCAgESSPkBSIkCAgERSakBSbkBAgEOTxVSIAIBBlAXUNkBAgEKURdRjwICAQdQblDWAQIBC1HeAVGMAgIBCVFYUaYBAgEI</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="GetOutlookMailMessages_1" sap:VirtualizedContainerService.HintSize="352.666666666667,22" />
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="314,62.6666666666667" />
-      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="314,86.6666666666667" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,313.333333333333">
+      <sap2010:ViewStateData Id="GetOutlookMailMessages_1" sap:VirtualizedContainerService.HintSize="352,22" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="314,62" />
+      <sap2010:ViewStateData Id="WriteTextFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,313">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="352.666666666667,452" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="374.666666666667,638">
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="352,448" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="374,634">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="464,806" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,930">
+      <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="464,798" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,922">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -123,7 +123,7 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,113.666666666667</av:Point>
-            <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+            <av:Size x:Key="ShapeSize">200,52</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -132,12 +132,12 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.66666666666666</av:Point>
-            <av:Size x:Key="ShapeSize">60,74.6666666666667</av:Size>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,77.3333333333333 300,113.666666666667</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="MailReader_1" sap:VirtualizedContainerService.HintSize="654,756" />
+      <sap2010:ViewStateData Id="MailReader_1" sap:VirtualizedContainerService.HintSize="654,716" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

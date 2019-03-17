@@ -81,8 +81,8 @@
                       <DelegateInArgument x:TypeArguments="snm:MailMessage" Name="mail" />
                     </ActivityAction.Argument>
                     <Sequence DisplayName="Sequence" sap2010:WorkflowViewState.IdRef="Sequence_2">
-                      <WriteLine DisplayName="Write Line" Text="[&quot;[i] new mail: &quot; + &quot;[&quot; + mail.Sender.ToString () + &quot;] &quot; + mail.Subject]" sap2010:WorkflowViewState.IdRef="WriteLine_2" />
-                      <p:PythonScope DisplayName="Python Scope" sap2010:WorkflowViewState.IdRef="PythonScope_1" Path="C:\Program Files\Python36\" TargetPlatform="x64" Version="Python_36">
+                      <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="[&quot;[i] new mail: &quot; + &quot;[&quot; + mail.Sender.ToString () + &quot;] &quot; + mail.Subject]" />
+                      <p:PythonScope DisplayName="Python Scope" sap2010:WorkflowViewState.IdRef="PythonScope_1" Path="C:\Program Files\Python36" TargetPlatform="x64" Version="Python_36">
                         <p:PythonScope.Body>
                           <ActivityAction x:TypeArguments="x:Object">
                             <ActivityAction.Argument>
@@ -111,41 +111,41 @@
       </FlowStep>
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
-    <sads:DebugSymbol.Symbol>d2BDOlxVc2Vyc1xEYW5pZWxcT25lRHJpdmVccHJvamVjdHNccHJvamVjdC5kc21sXHByb2plY3QubWwuc3BhZmlcTWFpbFJlYWRlclxNYWlsUmVhZGVyUHl0aG9uLnhhbWwfQgNzDwIBAUUJbhQCAQJGC20VAgEDRosBRpEBAgErRw1sGAIBBEwPTNoCAgElTQ9rHAIBBUzUAkzXAgIBKkxZTHICASlMpQJMtQICASdM+QFMiQICASZNoQFNsQECASNTFWggAgEGVBdU2QECAR9VF2YnAgEMZxdnjAICAQdUQFSoAQIBIFV2VZIBAgEeWx1jKAIBDWduZ4kCAgEIYB9gwAECARphH2H5AQIBE2IfYsYBAgEOYK0BYL0BAgEdYJQBYKEBAgEbYbQBYeQBAgEZYYwBYZkBAgEXYewBYfYBAgEVYZ8BYagBAgEUYrYBYsMBAgERYqQBYq4BAgEP</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d21DOlxVc2Vyc1xEYW5pZWxcT25lRHJpdmVccHJvamVjdHNccHJvamVjdC5kc21sXHByb2plY3QubWxccHJvamVjdC5tbC5zcGFtZXN0XE1haWxSZWFkZXJcTWFpbFJlYWRlclB5dGhvbi54YW1sH0IDcw8CAQFFCW4UAgECRgttFQIBA0aLAUaRAQIBK0cNbBgCAQRMD0zaAgIBJU0PaxwCAQVM1AJM1wICASpMWUxyAgEpTKUCTLUCAgEnTPkBTIkCAgEmTaEBTbEBAgEjUxVoIAIBBlQXVNkBAgEfVRdmJwIBDGcXZ4wCAgEHVG5U1gECASBVdlWRAQIBHlsdYygCAQ1nbmeJAgIBCGAfYMABAgEaYR9h+QECARNiH2LGAQIBDmCtAWC9AQIBHWCUAWChAQIBG2G0AWHkAQIBGWGMAWGZAQIBF2HsAWH2AQIBFWGfAWGoAQIBFGK2AWLDAQIBEWKkAWKuAQIBDw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="GetOutlookMailMessages_1" sap:VirtualizedContainerService.HintSize="388.666666666667,22" />
-      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="350,62.6666666666667" />
-      <sap2010:ViewStateData Id="LoadScript_1" sap:VirtualizedContainerService.HintSize="314,58.6666666666667" />
+      <sap2010:ViewStateData Id="GetOutlookMailMessages_1" sap:VirtualizedContainerService.HintSize="388,22" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="350,62" />
+      <sap2010:ViewStateData Id="LoadScript_1" sap:VirtualizedContainerService.HintSize="314,59" />
       <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="GetObject`1_5" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,306.666666666667">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,307">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="PythonScope_1" sap:VirtualizedContainerService.HintSize="350,342.666666666667" />
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="350,62.6666666666667" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="372,672">
+      <sap2010:ViewStateData Id="PythonScope_1" sap:VirtualizedContainerService.HintSize="350,343" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="350,62" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="372,671">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="388.666666666667,810.666666666667" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="410.666666666667,996.666666666667">
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="388,806" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="410,992">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="464,1164.66666666667" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="486,1288.66666666667">
+      <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="464,1156" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="486,1280">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -156,7 +156,7 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">200,113.666666666667</av:Point>
-            <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+            <av:Size x:Key="ShapeSize">200,52</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -165,12 +165,12 @@
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
-            <av:Size x:Key="ShapeSize">60,74.6666666666667</av:Size>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">300,77.1666666666667 300,113.666666666667</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="PythonExample_1" sap:VirtualizedContainerService.HintSize="654,756" />
+      <sap2010:ViewStateData Id="PythonExample_1" sap:VirtualizedContainerService.HintSize="654,716" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

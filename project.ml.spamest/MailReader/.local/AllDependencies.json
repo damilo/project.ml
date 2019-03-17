@@ -972,9 +972,9 @@
     "restore": {
       "projectUniqueName": "MailReader",
       "projectName": "MailReader",
-      "projectPath": "C:\\Users\\Daniel\\OneDrive\\projects\\project.dsml\\project.ml.spafi\\MailReader\\.local",
+      "projectPath": "C:\\Users\\Daniel\\OneDrive\\projects\\project.dsml\\project.ml\\project.ml.spamest\\MailReader\\.local",
       "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Daniel\\OneDrive\\projects\\project.dsml\\project.ml.spafi\\MailReader\\.local"
+      "outputPath": "C:\\Users\\Daniel\\OneDrive\\projects\\project.dsml\\project.ml\\project.ml.spamest\\MailReader\\.local"
     },
     "frameworks": {
       "net461": {
